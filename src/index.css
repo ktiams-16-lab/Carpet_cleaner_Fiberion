@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #000000;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 16% 8%, rgba(0, 119, 200, 0.16), transparent 30rem),
+    radial-gradient(circle at 86% 20%, rgba(102, 179, 46, 0.08), transparent 24rem),
+    linear-gradient(135deg, #0B1D34 0%, #020509 42%, #000000 100%);
+  color: #ffffff;
+}
+
+::selection {
+  background: rgba(0, 119, 200, 0.4);
+  color: #ffffff;
+}
+
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.48'/%3E%3C/svg%3E");
+}
+
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+@keyframes fiberion-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes fiberion-shimmer {
+  0% {
+    transform: translateX(-120%) rotate(12deg);
+  }
+  100% {
+    transform: translateX(220%) rotate(12deg);
+  }
+}
+
+@layer components {
+  .fiberion-button {
+    @apply inline-flex items-center gap-2 rounded-full bg-electric px-5 py-3 text-sm font-bold text-white shadow-[0_0_30px_rgba(0,119,200,0.34)] transition-all duration-300 hover:gap-3 hover:bg-[#0094FF] hover:shadow-[0_0_42px_rgba(0,148,255,0.48)] focus:outline-none focus:ring-2 focus:ring-sky focus:ring-offset-2 focus:ring-offset-black;
+  }
+
+  .fiberion-button-secondary {
+    @apply inline-flex items-center gap-2 rounded-full bg-lime px-5 py-3 text-sm font-bold text-navy shadow-[0_0_30px_rgba(102,179,46,0.26)] transition-all duration-300 hover:gap-3 hover:brightness-110 hover:shadow-[0_0_42px_rgba(102,179,46,0.42)] focus:outline-none focus:ring-2 focus:ring-sky focus:ring-offset-2 focus:ring-offset-black;
+  }
+
+  .fiberion-button-outline {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm font-bold text-white backdrop-blur transition-all duration-300 hover:border-sky hover:bg-sky/15 hover:shadow-[0_0_28px_rgba(167,214,245,0.18)] focus:outline-none focus:ring-2 focus:ring-sky focus:ring-offset-2 focus:ring-offset-black;
+  }
+
+  .fiberion-input {
+    @apply w-full rounded-2xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white outline-none transition placeholder:text-gray-500 focus:border-sky focus:ring-2 focus:ring-electric/40;
+  }
+
+  .fiberion-panel {
+    @apply relative overflow-hidden rounded-3xl border border-white/5 bg-navy/70 shadow-[0_22px_80px_rgba(0,119,200,0.12)] backdrop-blur;
+  }
+
+  .fiberion-panel::before {
+    content: '';
+    position: absolute;
+    inset: -40% auto -40% -45%;
+    width: 32%;
+    background: linear-gradient(90deg, transparent, rgba(167, 214, 245, 0.14), transparent);
+    pointer-events: none;
+    animation: fiberion-shimmer 8s linear infinite;
+  }
+
+  .fiberion-glow-card {
+    @apply transition duration-300 hover:-translate-y-1 hover:border-electric/40 hover:shadow-[0_24px_90px_rgba(0,119,200,0.2)];
+  }
+
+  .fiberion-float {
+    animation: fiberion-float 7s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
