@@ -1,11 +1,13 @@
+'use client';
+
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export function FiberionMark({ compact = false, hero = false }: { compact?: boolean; hero?: boolean }) {
   const [logoLoaded, setLogoLoaded] = useState(true);
 
   return (
-    <Link to="/" className="flex items-center gap-3 text-left">
+    <Link href="/" className="flex items-center gap-3 text-left">
       {logoLoaded ? (
         <span
           className={

@@ -1,3 +1,5 @@
+'use client';
+
 import { FormEvent, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { submitQuoteRequest } from '../services/quotes';

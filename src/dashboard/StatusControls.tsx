@@ -1,3 +1,5 @@
+'use client';
+
 import type { JobStatus } from '../types/fiberion';
 import { jobStatuses, jobStatusMeta } from '../data/status';
 import { StatusBadge } from '../components/ui/Badge';

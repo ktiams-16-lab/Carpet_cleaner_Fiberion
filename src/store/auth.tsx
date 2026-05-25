@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
+'use client';
+
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 
 type AuthContextValue = {
   isAuthenticated: boolean;
@@ -9,9 +11,11 @@ type AuthContextValue = {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    () => localStorage.getItem('fiberion-admin') === 'true'
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    setIsAuthenticated(localStorage.getItem('fiberion-admin') === 'true');
+  }, []);
 
   const value = useMemo<AuthContextValue>(
     () => ({

@@ -1,23 +1,35 @@
-import { FormEvent, useState } from 'react';
+'use client';
+
+import { FormEvent, useEffect, useState } from 'react';
 import { Lock } from 'lucide-react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FiberionMark } from '../../components/Brand';
 import { useAuth } from '../../store/auth';
 
 export default function LoginPage() {
   const { isAuthenticated, login } = useAuth();
-  const location = useLocation();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [error, setError] = useState('');
-  const from = (location.state as { from?: string } | null)?.from ?? '/dashboard';
+  const from = searchParams?.get('from') ?? '/dashboard';
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace(from);
+    }
+  }, [from, isAuthenticated, router]);
 
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const ok = login(String(formData.get('email') ?? ''), String(formData.get('password') ?? ''));
-    if (!ok) setError('Enter an email and password to use the mock admin session.');
-  }
+    if (!ok) {
+      setError('Enter an email and password to use the mock admin session.');
+      return;
+    }
 
-  if (isAuthenticated) return <Navigate to={from} replace />;
+    router.replace(from);
+  }
 
   return (
     <main className="grid min-h-screen place-items-center bg-[radial-gradient(circle_at_top,rgba(0,119,200,0.22),transparent_28rem),linear-gradient(135deg,#0B1D34_0%,#020509_55%,#000000_100%)] p-4">
